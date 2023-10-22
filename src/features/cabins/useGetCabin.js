@@ -6,10 +6,11 @@ export default function useGetCabin() {
     isLoading,
     data: cabins,
     status,
+    error,
   } = useQuery({
     queryKey: ["cabins"],
     queryFn: getCabins,
   });
 
-  return { isLoading, cabins };
+  return { isLoading, cabins, error };
 }
