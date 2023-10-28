@@ -1,19 +1,23 @@
-import { useForm } from "react-hook-form";
+import { useState } from "react";
 import Button from "../../ui/Button";
 import Form from "../../ui/Form";
-import FormRow from "../../ui/FormRow";
 import Input from "../../ui/Input";
-import { signup } from "../../services/apiAuth";
+import FormRowVertical from "../../ui/FormRowVertical";
+
+import useLogin from "./useLogin";
+import SpinnerMini from "../../ui/SpinnerMini";
+import { useNavigate } from "react-router-dom";
 import useSignUp from "./useSignUp";
+import { useForm } from "react-hook-form";
 
-// Email regex: /\S+@\S+\.\S+/
-
-function SignupForm() {
+function SignupFormPractice() {
+  const navigate = useNavigate();
   const { isLoading, signup } = useSignUp();
   const { register, handleSubmit, getValues, formState, reset } = useForm();
   const { errors } = formState;
   function onSubmit({ fullName, email, password }) {
-    signup({ fullName, email, password }, { onSettled: () => reset() });
+    signup({ fullName, email, password }, { onSettled: reset });
+    navigate("/");
     // console.log(errors);
   }
   function onError(error) {
@@ -21,16 +25,16 @@ function SignupForm() {
   }
   return (
     <Form onSubmit={handleSubmit(onSubmit, onError)}>
-      <FormRow label="Full name" error={errors?.fullName?.message}>
+      <FormRowVertical label="Full name" error={errors?.fullName?.message}>
         <Input
           type="text"
           id="fullName"
           disabled={isLoading}
           {...register("fullName", { required: "Input your Fullname" })}
         />
-      </FormRow>
+      </FormRowVertical>
 
-      <FormRow label="Email address" error={errors?.email?.message}>
+      <FormRowVertical label="Email address" error={errors?.email?.message}>
         <Input
           type="email"
           id="email"
@@ -43,9 +47,9 @@ function SignupForm() {
             },
           })}
         />
-      </FormRow>
+      </FormRowVertical>
 
-      <FormRow
+      <FormRowVertical
         label="Password (min 8 characters)"
         error={errors?.password?.message}
       >
@@ -54,16 +58,19 @@ function SignupForm() {
           id="password"
           disabled={isLoading}
           {...register("password", {
-            required: "Input a valid password",
+            required: "Input required",
             minLength: {
               value: 8,
               message: "Password Length must be at least 8 characterss",
             },
           })}
         />
-      </FormRow>
+      </FormRowVertical>
 
-      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
+      <FormRowVertical
+        label="Repeat password"
+        error={errors?.passwordConfirm?.message}
+      >
         <Input
           type="password"
           id="passwordConfirm"
@@ -74,17 +81,15 @@ function SignupForm() {
               value === getValues().password || "Passowrds need to match",
           })}
         />
-      </FormRow>
+      </FormRowVertical>
 
-      <FormRow>
+      <FormRowVertical>
         {/* type is an HTML attribute! */}
-        <Button variation="secondary" type="reset" onClick={reset}>
-          Cancel
-        </Button>
+
         <Button>Create new user</Button>
-      </FormRow>
+      </FormRowVertical>
     </Form>
   );
 }
 
-export default SignupForm;
+export default SignupFormPractice;

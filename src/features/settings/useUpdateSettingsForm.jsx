@@ -67,7 +67,6 @@ function UpdateSettingsForm() {
           onBlur={(e) => handleUpdate(e, "breakfastPrice")}
         />
       </FormRow>
-      <button>Submit</button>
     </Form>
   );
 }

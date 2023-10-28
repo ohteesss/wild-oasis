@@ -38,12 +38,14 @@ const FilterButton = styled.button`
 
 function Filter({ filterField, options }) {
   const { value: filterValue, setQuery } = useUrl(filterField);
+  // const { value: pageValue, setQuery: setPageQuery } = useUrl("page");
   const [searchParams, setSearchParams] = useSearchParams();
   const currentFilter = filterValue || options.at(0).value;
   function handleClick(value) {
-    setQuery(value);
+    searchParams.set(filterField, value);
+    if (searchParams.get("page")) searchParams.set("page", 1);
 
-    // setSearchParams(`discount=${value}`);
+    setSearchParams(searchParams);
   }
   return (
     <StyledFilter>

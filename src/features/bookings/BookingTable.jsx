@@ -11,12 +11,15 @@ import Pagination from "../../ui/Pagination";
 
 function BookingTable() {
   // const bookings = [];
-  const { bookings, isLoading } = useBookings();
+  // const { bookings, count, isLoading } = useBookings();
+  const { isLoading, bookings, count } = useBookings();
+  if (isLoading) return <Spinner />;
+  if (!bookings.length) return <Empty resourceName="bookings" />;
   // const { value: urlStatusValue } = useUrl("status");
   // const { value: urlSortByValue } = useUrl("sortBy");
   // console.log(urlStatusValue);
   // console.log(urlSortByValue);
-  if (isLoading) return <Spinner />;
+  // if (isLoading) return <Spinner />;
   // if (!bookings.length) return <Empty resourceName="bookings" />;
   // let filteredBookings;
   // if (urlStatusValue === "all") {
@@ -53,7 +56,7 @@ function BookingTable() {
           )}
         />
         <Table.Footer>
-          <Pagination count={75} />
+          <Pagination count={count} />
         </Table.Footer>
       </Table>
     </Menus>

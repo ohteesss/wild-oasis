@@ -1,6 +1,7 @@
 import { HiChevronLeft, HiChevronRight } from "react-icons/hi2";
 import styled from "styled-components";
 import useUrl from "../hooks/useUrl";
+import { PAGE_SIZE } from "../utils/constants";
 
 const StyledPagination = styled.div`
   width: 100%;
@@ -58,7 +59,7 @@ const PaginationButton = styled.button`
   }
 `;
 
-const PAGE_SIZE = 10;
+// const PAGE_SIZE = 10;
 
 function Pagination({ count }) {
   const { value: pageNumber } = useUrl("page");
@@ -66,7 +67,7 @@ function Pagination({ count }) {
   const currentPage = !pageNumber ? 1 : Number(pageNumber);
   const pageCount = Math.ceil(count / PAGE_SIZE);
   function nextPage() {
-    const next = currentPage === pageCount ? currentPage : currentPage + 1;
+    const next = currentPage + 1;
 
     setQuery(next);
   }
@@ -93,7 +94,7 @@ function Pagination({ count }) {
           onClick={nextPage}
           disabled={currentPage === pageCount}
         >
-          <HiChevronRight /> <span>Left</span>
+          <span>Next</span> <HiChevronRight />
         </PaginationButton>
       </Buttons>
     </StyledPagination>
